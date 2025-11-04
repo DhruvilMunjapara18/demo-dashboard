@@ -1,9 +1,17 @@
+import { useQuery, UseQueryOptions } from "@tanstack/react-query";
 import { fetchCustomers } from "@/lib/api";
-import { useQuery } from "@tanstack/react-query";
+import { ApiResponse, CustomerTableProps } from "@/types/customer";
 
-export const useCustomers = () => {
-  return useQuery({
-    queryKey: ["customers"],
-    queryFn: fetchCustomers,
+interface UseCustomersParams {
+  page?: number;
+  limit?: number;
+  search?: string;
+  sortBy?: "newest" | "oldest" | "name";
+}
+
+export const useCustomers = (params: UseCustomersParams) => {
+  return useQuery<ApiResponse,Error>({
+    queryKey: ["customers",JSON.stringify (params)],
+    queryFn: () => fetchCustomers(params),   
   });
 };

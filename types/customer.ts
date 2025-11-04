@@ -1,11 +1,21 @@
 export interface Customer {
-  id: number;
+  id: string;
   name: string;
   company: string;
   phone: string;
   email: string;
   country: string;
   status: "Active" | "Inactive";
+}
+
+export interface CustomerTableProps {
+  customers: Customer[];
+  total: number;
+  currentPage: number;
+  onDelete?: (id: string) => void;
+  onEdit?: (id: string) => void;
+  itemsPerPage: number;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export interface ApiResponse {
@@ -22,4 +32,11 @@ export interface StatCardData {
     isPositive: boolean;
   };
   avatars?: string[];
+}
+
+export interface FetchCustomersParams {
+  page?: number;
+  limit?: number;
+  search?: string;
+  sortBy?: "newest" | "oldest" | "name";
 }
